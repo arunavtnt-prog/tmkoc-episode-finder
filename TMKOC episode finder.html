@@ -26,15 +26,16 @@
             border: 1px solid #fbe16b;
         }
         .logo {
-            width: 90px;
+            width: 140px;
             margin-bottom: 10px;
             border-radius: 9px;
             box-shadow: 0 2px 8px rgba(251, 225, 107, 0.18);
+            background: transparent;
         }
         h1 {
             font-size: 1.55em;
             font-weight: 700;
-            color: #ffc300; /* Deeper yellow */
+            color: #ffc300;
             margin-bottom: 10px;
             letter-spacing: 1px;
         }
@@ -116,7 +117,7 @@
         }
         @media (max-width: 600px) {
             .container { padding: 18px; }
-            .logo { width: 60px; }
+            .logo { width: 90px; }
             .suggestions { left: 18px; right: 18px; top: 122px; }
         }
     </style>
@@ -124,7 +125,8 @@
 <body>
 
     <div class="container">
-        <img src="https://static.wikia.nocookie.net/logopedia/images/e/e7/Taarak_Mehta_ka_Ooltah_Chashmah_%28TMKOC%29_Logo.png/revision/latest?cb=20220911033015" alt="TMKOC Logo" class="logo">
+        <!-- Use your uploaded logo image filename or path below -->
+        <img src="tmkoc-logo.png" alt="TMKOC Logo" class="logo">
         <h1>TMKOC Episode Finder 🎬</h1>
         <p>Enter the arc or episode name you want to watch:</p>
         <input type="text" id="episodeInput" placeholder="e.g. Jethalal crosses border to Pakistan" autocomplete="off">
