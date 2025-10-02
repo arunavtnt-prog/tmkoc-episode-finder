@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TMKOC Episode Player</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #fffbe8 0%, #f7faff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 32px 28px 26px 28px;
+            border-radius: 18px;
+            box-shadow: 0 4px 32px rgba(0,0,0,0.07);
+            max-width: 430px;
+            width: 95%;
+            position: relative;
+            border: 1px solid #fbe16b;
+        }
+        .logo {
+            width: 90px;
+            margin-bottom: 10px;
+            border-radius: 9px;
+            box-shadow: 0 2px 8px rgba(251, 225, 107, 0.18);
+        }
+        h1 {
+            font-size: 1.55em;
+            font-weight: 700;
+            color: #ffc300; /* Deeper yellow */
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        p {
+            color: #333e;
+            font-size: 1.07em;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 11px 12px;
+            border: 2px solid #ffe066;
+            border-radius: 8px;
+            background: #fafafc;
+            font-size: 1em;
+            margin-bottom: 0;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 2px rgba(255,183,3,0.03);
+        }
+        input[type="text"]:focus {
+            border-color: #ffb703;
+            box-shadow: 0 0 0 2px #ffb70333;
+            outline: none;
+        }
+        .suggestions {
+            position: absolute;
+            left: 28px;
+            right: 28px;
+            top: 153px;
+            background: #fff;
+            border: 1.5px solid #ffe066;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 2px 8px rgba(251, 225, 107, 0.09);
+            z-index: 10;
+            max-height: 160px;
+            overflow-y: auto;
+            font-size: 1em;
+            margin-bottom: 10px;
+            animation: fadeIn 0.2s;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .suggestion-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            transition: background 0.16s, color 0.16s;
+            border-bottom: 1px solid #fffbe8;
+        }
+        .suggestion-item:last-child { border-bottom: none; }
+        .suggestion-item:hover,
+        .suggestion-item.active {
+            background: #fffbe8;
+            color: #ff8552;
+        }
+        button {
+            display: block;
+            width: 100%;
+            background: linear-gradient(95deg, #ffe066 10%, #ffb703 90%);
+            color: #333;
+            padding: 12px 0;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.08em;
+            font-weight: 600;
+            margin-top: 14px;
+            box-shadow: 0 2px 8px rgba(255,183,3,0.06);
+            transition: background 0.25s, transform 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(95deg, #ffb703 10%, #ffe066 90%);
+            transform: scale(1.03);
+        }
+        .footer {
+            margin-top: 18px;
+            font-size: 0.98em;
+            color: #a6a6a6;
+            letter-spacing: 0.5px;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 18px; }
+            .logo { width: 60px; }
+            .suggestions { left: 18px; right: 18px; top: 122px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://static.wikia.nocookie.net/logopedia/images/e/e7/Taarak_Mehta_ka_Ooltah_Chashmah_%28TMKOC%29_Logo.png/revision/latest?cb=20220911033015" alt="TMKOC Logo" class="logo">
+        <h1>TMKOC Episode Finder 🎬</h1>
+        <p>Enter the arc or episode name you want to watch:</p>
+        <input type="text" id="episodeInput" placeholder="e.g. Jethalal crosses border to Pakistan" autocomplete="off">
+        <div id="suggestions" class="suggestions" style="display:none;"></div>
+        <button onclick="playEpisode()">▶️ Play on YouTube</button>
+        <div class="footer">
+            Made with <span style="color:#ff8552;">&#10084;&#65039;</span> for TMKOC fans
+        </div>
+    </div>
+
+    <script>
+        const popularEpisodes = [
+            "Jethalal accidentally crosses border to Pakistan",
+            "Popatlal's Shaadi Special",
+            "Bhide vs Jethalal Water Tanker Saga",
+            "Tapu Sena Ganpati Celebrations",
+            "Gogi becomes Gabbar",
+            "Sodhi's Car Stolen",
+            "Champak Chacha's Birthday",
+            "ATM Theft in Gokuldham",
+            "Haathi's Diet Plan",
+            "Gokuldham Society's Holi",
+            "Popatlal's Umbrella Mystery",
+            "Jethalal and Babita's English Classes",
+            "Bhide's Scooter Trouble",
+            "Tapu Sena Science Project",
+            "Sundar's Surprise Visit"
+        ];
+
+        const input = document.getElementById('episodeInput');
+        const suggestionsDiv = document.getElementById('suggestions');
+        let selectedIndex = -1;
+        let filteredSuggestions = [];
+
+        input.addEventListener('input', function() {
+            const query = input.value.trim().toLowerCase();
+            if (query === "") {
+                suggestionsDiv.style.display = "none";
+                return;
+            }
+            filteredSuggestions = popularEpisodes.filter(ep => ep.toLowerCase().includes(query));
+            renderSuggestions();
+        });
+
+        input.addEventListener('keydown', function(e) {
+            if (suggestionsDiv.style.display === "none") return;
+
+            if (e.key === 'ArrowDown') {
+                selectedIndex = (selectedIndex + 1) % filteredSuggestions.length;
+                updateActiveSuggestion();
+                e.preventDefault();
+            } else if (e.key === 'ArrowUp') {
+                selectedIndex = (selectedIndex - 1 + filteredSuggestions.length) % filteredSuggestions.length;
+                updateActiveSuggestion();
+                e.preventDefault();
+            } else if (e.key === 'Enter') {
+                if (selectedIndex >= 0 && filteredSuggestions[selectedIndex]) {
+                    input.value = filteredSuggestions[selectedIndex];
+                    suggestionsDiv.style.display = "none";
+                    selectedIndex = -1;
+                } else {
+                    playEpisode();
+                }
+                e.preventDefault();
+            } else if (e.key === 'Escape') {
+                suggestionsDiv.style.display = "none";
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!suggestionsDiv.contains(e.target) && e.target !== input) {
+                suggestionsDiv.style.display = "none";
+            }
+        });
+
+        function renderSuggestions() {
+            if (filteredSuggestions.length === 0) {
+                suggestionsDiv.style.display = "none";
+                return;
+            }
+            suggestionsDiv.innerHTML = filteredSuggestions.map((ep, idx) =>
+                `<div class="suggestion-item${selectedIndex === idx ? ' active' : ''}" data-index="${idx}">${ep}</div>`
+            ).join('');
+            suggestionsDiv.style.display = "block";
+            selectedIndex = -1;
+
+            Array.from(suggestionsDiv.children).forEach(item => {
+                item.addEventListener('mousedown', function() {
+                    input.value = filteredSuggestions[this.dataset.index];
+                    suggestionsDiv.style.display = "none";
+                });
+            });
+        }
+
+        function updateActiveSuggestion() {
+            Array.from(suggestionsDiv.children).forEach((item, idx) => {
+                item.classList.toggle('active', idx === selectedIndex);
+            });
+        }
+
+        function playEpisode() {
+            const userInput = input.value.trim();
+            if (userInput === "") {
+                alert("Please enter an episode or arc name.");
+                return;
+            }
+            const searchPrefix = "tmkoc playlist ";
+            const fullSearchQuery = searchPrefix + userInput;
+            const encodedQuery = encodeURIComponent(fullSearchQuery);
+            const youtubeBaseUrl = "https://www.youtube.com/results?search_query=";
+            const finalUrl = youtubeBaseUrl + encodedQuery;
+            window.open(finalUrl, '_blank');
+        }
+
+    </script>
+
+</body>
+</html>
