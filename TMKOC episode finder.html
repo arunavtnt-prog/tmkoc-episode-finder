@@ -224,9 +224,21 @@
             const searchPrefix = "tmkoc playlist ";
             const fullSearchQuery = searchPrefix + userInput;
             const encodedQuery = encodeURIComponent(fullSearchQuery);
-            const youtubeBaseUrl = "https://www.youtube.com/results?search_query=";
-            const finalUrl = youtubeBaseUrl + encodedQuery;
-            window.open(finalUrl, '_blank');
+
+            const youtubeWebUrl = "https://www.youtube.com/results?search_query=" + encodedQuery;
+            const youtubeAppUrl = "youtube://results?search_query=" + encodedQuery;
+
+            // Mobile detection
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+            if (isMobile) {
+                window.location = youtubeAppUrl;
+                setTimeout(function() {
+                    window.open(youtubeWebUrl, '_blank');
+                }, 1200);
+            } else {
+                window.open(youtubeWebUrl, '_blank');
+            }
         }
     </script>
 </body>
