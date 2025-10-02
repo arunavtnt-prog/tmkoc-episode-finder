@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TMKOC Episode Player</title>
+    <title>TMKOC Episode Finder</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -24,13 +24,6 @@
             width: 95%;
             position: relative;
             border: 1px solid #fbe16b;
-        }
-        .logo {
-            width: 140px;
-            margin-bottom: 10px;
-            border-radius: 9px;
-            box-shadow: 0 2px 8px rgba(251, 225, 107, 0.18);
-            background: transparent;
         }
         h1 {
             font-size: 1.55em;
@@ -64,7 +57,7 @@
             position: absolute;
             left: 28px;
             right: 28px;
-            top: 153px;
+            top: 102px;
             background: #fff;
             border: 1.5px solid #ffe066;
             border-top: none;
@@ -117,16 +110,12 @@
         }
         @media (max-width: 600px) {
             .container { padding: 18px; }
-            .logo { width: 90px; }
-            .suggestions { left: 18px; right: 18px; top: 122px; }
+            .suggestions { left: 18px; right: 18px; top: 82px; }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <!-- Use your uploaded logo image filename or path below -->
-        <img src="tmkoc-logo.png" alt="TMKOC Logo" class="logo">
         <h1>TMKOC Episode Finder 🎬</h1>
         <p>Enter the arc or episode name you want to watch:</p>
         <input type="text" id="episodeInput" placeholder="e.g. Jethalal crosses border to Pakistan" autocomplete="off">
@@ -136,7 +125,6 @@
             Made with <span style="color:#ff8552;">&#10084;&#65039;</span> for TMKOC fans
         </div>
     </div>
-
     <script>
         const popularEpisodes = [
             "Jethalal accidentally crosses border to Pakistan",
@@ -240,8 +228,6 @@
             const finalUrl = youtubeBaseUrl + encodedQuery;
             window.open(finalUrl, '_blank');
         }
-
     </script>
-
 </body>
 </html>
