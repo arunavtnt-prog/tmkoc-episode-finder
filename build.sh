@@ -11,6 +11,7 @@ echo "==================================="
 # Configuration
 INPUT_MD="plan.md"
 OUTPUT_PDF="business-plan.pdf"
+TUFTE_TEX="business-plan-tufte.tex"
 TEMPLATE="templates/modern-template.tex"
 CHARTS_DIR="charts"
 ASSETS_DIR="assets"
@@ -79,34 +80,45 @@ generate_charts() {
     fi
 }
 
-# Build PDF with pandoc
+# Build PDF with Tufte-LaTeX
 build_pdf() {
-    echo "Building PDF with pandoc + xelatex..."
+    echo "Building PDF with Tufte-LaTeX..."
 
-    # Pandoc command with all options
-    pandoc "$INPUT_MD" \
-        --from markdown+yaml_metadata_block \
-        --to pdf \
-        --output "$OUTPUT_PDF" \
-        --template="$TEMPLATE" \
-        --pdf-engine=xelatex \
-        --toc \
-        --toc-depth=2 \
-        --number-sections \
-        --highlight-style=tango \
-        --variable=geometry:margin=1.25in \
-        --variable=linkcolor=orange \
-        --variable=urlcolor=orange \
-        --variable=toccolor=black \
-        2>&1 | grep -v "warning" || true
+    # Use Tufte template (preferred)
+    if [ -f "$TUFTE_TEX" ]; then
+        echo "Using Tufte-LaTeX design system..."
+        pdflatex -interaction=nonstopmode "$TUFTE_TEX" > /dev/null 2>&1
+        pdflatex -interaction=nonstopmode "$TUFTE_TEX" > /dev/null 2>&1
+        pdflatex -interaction=nonstopmode "$TUFTE_TEX" > /dev/null 2>&1
 
-    # Check if PDF was created
-    if [ -f "$OUTPUT_PDF" ]; then
-        local size=$(du -h "$OUTPUT_PDF" | cut -f1)
-        echo "✓ PDF generated successfully: $OUTPUT_PDF ($size)"
+        if [ -f "business-plan-tufte.pdf" ]; then
+            cp business-plan-tufte.pdf "$OUTPUT_PDF"
+            local size=$(du -h "$OUTPUT_PDF" | cut -f1)
+            echo "✓ PDF generated successfully: $OUTPUT_PDF ($size)"
+        else
+            echo "✗ Tufte PDF generation failed"
+            exit 1
+        fi
     else
-        echo "✗ PDF generation failed"
-        exit 1
+        # Fallback to pandoc with modern template
+        echo "Using modern template (Tufte not found)..."
+        pandoc "$INPUT_MD" \
+            --from markdown+yaml_metadata_block \
+            --to pdf \
+            --output "$OUTPUT_PDF" \
+            --template="$TEMPLATE" \
+            --pdf-engine=xelatex \
+            --toc \
+            --number-sections \
+            2>&1 | grep -v "warning" || true
+
+        if [ -f "$OUTPUT_PDF" ]; then
+            local size=$(du -h "$OUTPUT_PDF" | cut -f1)
+            echo "✓ PDF generated successfully: $OUTPUT_PDF ($size)"
+        else
+            echo "✗ PDF generation failed"
+            exit 1
+        fi
     fi
 }
 
