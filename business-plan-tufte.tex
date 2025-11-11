@@ -1,0 +1,454 @@
+\documentclass[justified,twoside]{tufte-book}
+
+% Modern Business Plan in Tufte Style
+% Based on Edward Tufte's design principles
+
+\hypersetup{colorlinks}
+
+% Font configuration
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Graphics
+\usepackage{graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{assets/}{charts/}}
+
+% Tables
+\usepackage{booktabs}
+\usepackage{longtable}
+
+% Modern color palette (Navy + Electric Blue)
+\usepackage{xcolor}
+\definecolor{NavyPrimary}{RGB}{11, 14, 20}
+\definecolor{ElectricBlue}{RGB}{0, 123, 255}
+\definecolor{LightBlue}{RGB}{0, 212, 255}
+\definecolor{GreyText}{RGB}{91, 94, 99}
+
+% Hyperlinks in blue
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ElectricBlue,
+    urlcolor=ElectricBlue,
+    citecolor=NavyPrimary
+}
+
+% Units
+\usepackage{units}
+
+% Better typography
+\usepackage{microtype}
+
+% Tight list for Pandoc
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Title information
+\title{Revolutionary AI Platform\thanks{Business Plan 2025--2027}}
+\author{Anthropic Ventures}
+\date{March 2025}
+
+% Custom commands for stats
+\newcommand{\statbox}[2]{%
+  \begin{fullwidth}
+  \noindent\colorbox{lightgray!30}{%
+    \parbox{\linewidth}{%
+      \vspace{0.3cm}
+      \textbf{\large #1}\\[0.3cm]
+      #2
+      \vspace{0.3cm}
+    }
+  }
+  \end{fullwidth}
+}
+
+\begin{document}
+
+% Title page
+\maketitle
+
+% Copyright and version
+\newpage
+\begin{fullwidth}
+\thispagestyle{empty}
+\vspace*{\fill}
+\noindent\textsc{Published by Anthropic Ventures}\\
+\noindent\textsc{March 2025}\\[0.5cm]
+\noindent\textsc{Version 1.0}\\[0.5cm]
+\noindent\textcolor{GreyText}{\small\textbf{CONFIDENTIAL} — This business plan contains proprietary information.}\\
+\noindent\textcolor{GreyText}{\small Distribution is restricted to authorized parties only.}
+\vspace*{\fill}
+\end{fullwidth}
+
+% Table of contents
+\tableofcontents
+
+\newpage
+
+% Main content
+\chapter{Executive Summary}
+
+\newthought{We are building} the next generation of AI-powered solutions that transform how businesses operate. Our platform combines cutting-edge machine learning with intuitive user experiences to deliver unprecedented value.
+
+\marginnote{%
+  \textbf{Key Highlights}\\[0.2cm]
+  \$450B market\\
+  \$45M ARR by 2027\\
+  6:1 LTV:CAC ratio\\
+  85\% gross margins
+}
+
+\section{Mission Statement}
+
+To \textbf{democratize artificial intelligence} and make advanced AI capabilities accessible to every organization, regardless of size or technical expertise.\sidenote{This mission drives every product decision and guides our long-term strategy.}
+
+\section{Market Opportunity}
+
+The global AI market is projected to reach \textbf{\$1.8 trillion by 2030}, growing at a CAGR of 37.3\%. Our addressable market within enterprise AI solutions represents a \textbf{\$450 billion} opportunity.
+
+\subsection{Key Market Drivers}
+
+\begin{itemize}
+\item \textbf{Automation Demand} — Businesses seeking efficiency and cost reduction
+\item \textbf{Cloud Infrastructure} — Expanding access to compute resources
+\item \textbf{Digital Transformation} — Rising investment across all industries
+\item \textbf{AI Maturity} — Growing trust and understanding of AI capabilities
+\end{itemize}
+
+\chapter{Product Overview}
+
+\newthought{Our flagship platform} provides enterprise-grade AI capabilities through an intuitive interface.
+
+\marginnote{%
+  \includegraphics[width=\linewidth]{logo.png}\\[0.2cm]
+  \small Neural network architecture powering our platform
+}
+
+\section{Core Features}
+
+\begin{enumerate}
+\item \textbf{Intelligent Automation} — Streamline workflows with AI-driven decision making
+\item \textbf{Predictive Analytics} — Forecast trends with 95\%+ accuracy
+\item \textbf{Natural Language Interface} — Conversational AI for all users
+\item \textbf{Enterprise Integration} — Seamless connectivity with existing systems
+\end{enumerate}
+
+\section{Competitive Advantages}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{lp{7cm}}
+\toprule
+\textbf{Advantage} & \textbf{Description} \\
+\midrule
+Technical Superiority & Proprietary algorithms with best-in-class performance \\
+User Experience & Intuitive interface requiring minimal training \\
+Privacy \& Security & Enterprise-grade security with on-premise options \\
+Ecosystem & Rich marketplace of integrations \\
+\bottomrule
+\end{tabular}
+\caption{Competitive positioning}
+\end{table}
+
+\chapter{Financial Projections}
+
+\newthought{Our financial model} demonstrates strong unit economics and a clear path to profitability with 18x growth over three years.
+
+\marginnote{%
+  \textbf{3-Year Trajectory}\\[0.2cm]
+  Year 1: \$2.5M ARR\\
+  Year 2: \$12M ARR\\
+  Year 3: \$45M ARR
+}
+
+\section{Revenue Growth}
+
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{revenue_forecast.pdf}
+\caption{Revenue growth and customer acquisition showing strong momentum and efficient scaling.}
+\label{fig:revenue}
+\end{figure}
+
+The chart in Figure~\ref{fig:revenue} shows our projected revenue growth alongside customer acquisition. Key metrics include:
+
+\begin{itemize}
+\item \textbf{Q1 2025:} \$150K revenue, 15 customers
+\item \textbf{Q4 2025:} \$720K revenue, 78 customers
+\item \textbf{Q4 2026:} \$3.5M revenue, 305 customers
+\item \textbf{Q4 2027:} \$12.5M revenue, 920 customers
+\end{itemize}
+
+\section{Revenue Streams}
+
+\begin{margintable}
+\centering
+\begin{tabular}{lc}
+\toprule
+\textbf{Stream} & \textbf{\%} \\
+\midrule
+SaaS Subscriptions & 70\% \\
+Professional Services & 20\% \\
+API Usage & 10\% \\
+\bottomrule
+\end{tabular}
+\caption{Revenue distribution}
+\end{margintable}
+
+Our diversified revenue model provides stability and multiple growth levers.
+
+\section{Path to Profitability}
+
+\begin{figure*}[h]
+\includegraphics[width=\linewidth]{expense_breakdown.pdf}
+\caption{Financial performance showing revenue, expenses, and the path to profitability. Breakeven achieved in Q4 2025.}
+\label{fig:expenses}
+\end{figure*}
+
+\marginnote{%
+  \textbf{Breakeven:} Q4 2025\\[0.2cm]
+  Operating leverage improves significantly in Years 2--3 as infrastructure costs scale efficiently.
+}
+
+\chapter{Unit Economics}
+
+\newthought{Strong unit economics} underpin our business model with a 6:1 LTV:CAC ratio significantly exceeding SaaS benchmarks.
+
+\section{Key Metrics}
+
+\begin{fullwidth}
+\begin{table}[h]
+\centering
+\begin{tabular}{lrp{8cm}}
+\toprule
+\textbf{Metric} & \textbf{Value} & \textbf{Context} \\
+\midrule
+CAC & \$8,000 & Customer acquisition cost \\
+LTV & \$48,000 & Lifetime value per customer \\
+LTV:CAC & 6:1 & Exceeds 3:1 industry benchmark \\
+Payback Period & 8 months & Rapid return on investment \\
+Gross Margin & 85\% & Best-in-class for SaaS \\
+NRR & 120\% & Strong expansion revenue \\
+\bottomrule
+\end{tabular}
+\caption{Unit economics demonstrating healthy, sustainable growth}
+\end{table}
+\end{fullwidth}
+
+\section{Operating Expenses}
+
+\begin{margintable}
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Category} & \textbf{Y1} & \textbf{Y3} \\
+\midrule
+Engineering & 40\% & 35\% \\
+Sales \& Mktg & 35\% & 40\% \\
+Product Dev & 15\% & 15\% \\
+Operations & 10\% & 10\% \\
+\bottomrule
+\end{tabular}
+\caption{Expense allocation}
+\end{margintable}
+
+Investment focus shifts toward sales and marketing as product matures, enabling efficient scaling.
+
+\chapter{Go-to-Market Strategy}
+
+\newthought{Our GTM strategy} targets three distinct segments with tailored approaches for each.
+
+\section{Target Segments}
+
+\subsection{Primary: Mid-market Enterprises}
+
+Mid-market enterprises (500--5000 employees) represent our core market.\sidenote{These organizations have clear pain points, budget authority, and high growth potential.}
+
+\subsection{Secondary: Large Enterprises}
+
+Large enterprises (5000+ employees) provide strategic partnerships, multi-year contracts, and reference customers that validate our platform at scale.
+
+\subsection{Tertiary: High-growth Startups}
+
+High-growth startups (50--500 employees) enable product-led growth through developer advocacy and community building.
+
+\section{Customer Acquisition Channels}
+
+\begin{fullwidth}
+\begin{table}[h]
+\centering
+\begin{tabular}{lp{10cm}}
+\toprule
+\textbf{Channel} & \textbf{Strategy} \\
+\midrule
+Content Marketing & Thought leadership, case studies, technical blog \\
+Partnerships & Strategic alliances with consulting firms \\
+Direct Sales & Dedicated enterprise sales team \\
+Developer Community & Open-source initiatives and API access \\
+\bottomrule
+\end{tabular}
+\caption{Multi-channel acquisition strategy}
+\end{table}
+\end{fullwidth}
+
+\chapter{Team \& Leadership}
+
+\newthought{Our founding team} brings together deep expertise from leading technology companies and successful startups.
+
+\marginnote{%
+  \textbf{Combined Experience}\\[0.2cm]
+  50+ years in tech\\
+  3 successful exits\\
+  \$500M+ in products shipped
+}
+
+\section{Leadership}
+
+\textbf{Chief Executive Officer}\\
+Former VP of Product at major cloud provider. 15 years experience leading \$100M+ product lines.
+
+\textbf{Chief Technology Officer}\\
+PhD in Machine Learning. Ex-research scientist at leading AI lab with 20+ publications.
+
+\textbf{Chief Product Officer}\\
+Designed products used by millions. Former PM at top consumer tech company. 12 years experience.
+
+\textbf{Chief Financial Officer}\\
+Led finance at successful SaaS company through IPO. Big 4 consulting background.
+
+\section{Advisory Board}
+
+Strategic advisors from Fortune 500 companies, top-tier VCs, and industry thought leaders provide guidance on product strategy, go-to-market, and fundraising.
+
+\chapter{Funding Requirements}
+
+\newthought{We are raising} \$15 million in Series A funding to scale operations and accelerate growth.
+
+\section{Capital Allocation}
+
+\begin{fullwidth}
+\begin{table}[h]
+\centering
+\begin{tabular}{lrp{8cm}}
+\toprule
+\textbf{Category} & \textbf{Allocation} & \textbf{Purpose} \\
+\midrule
+Engineering & 40\% & Expand team to 30 engineers \\
+Sales \& Marketing & 35\% & Scale GTM and customer acquisition \\
+Product Development & 15\% & New features and integrations \\
+Operations & 10\% & Infrastructure and administration \\
+\bottomrule
+\end{tabular}
+\caption{Use of proceeds}
+\end{table}
+\end{fullwidth}
+
+\marginnote{%
+  \textbf{Timeline:} Q2 2025\\[0.2cm]
+  18-month runway to achieve key milestones
+}
+
+\chapter{Milestones \& Timeline}
+
+\section{Q2 2025}
+\begin{itemize}
+\tightlist
+\item Launch beta platform with 10 design partners
+\item Achieve product-market fit validation
+\item Build core engineering team to 15 people
+\end{itemize}
+
+\section{Q3 2025}
+\begin{itemize}
+\tightlist
+\item General availability release
+\item First 50 paying customers
+\item Partnership with major cloud provider
+\end{itemize}
+
+\section{Q4 2025}
+\begin{itemize}
+\tightlist
+\item Reach \$1M ARR milestone
+\item Expand to 100 customers
+\item Launch enterprise tier
+\end{itemize}
+
+\section{2026}
+\begin{itemize}
+\tightlist
+\item Scale to \$12M ARR
+\item International expansion (EU, APAC)
+\item Launch marketplace ecosystem
+\item Team grows to 80 people
+\end{itemize}
+
+\section{2027}
+\begin{itemize}
+\tightlist
+\item Achieve \$45M ARR
+\item Series B fundraising
+\item Market leadership in key verticals
+\item Team reaches 200 people
+\end{itemize}
+
+\chapter{Risk Analysis}
+
+\newthought{We have identified} key risks and developed comprehensive mitigation strategies.
+
+\begin{fullwidth}
+\begin{table}[h]
+\centering
+\begin{tabular}{lcp{8cm}}
+\toprule
+\textbf{Risk} & \textbf{Impact} & \textbf{Mitigation} \\
+\midrule
+Technical & Medium & Strong technical team, robust testing, gradual rollout \\
+Market & Medium & Focus on proven use cases, maintain flexibility \\
+Competitive & High & Rapid innovation, strong customer relationships \\
+Regulatory & Low & Proactive compliance, privacy-first design \\
+Execution & Medium & Experienced leadership, clear KPIs \\
+\bottomrule
+\end{tabular}
+\caption{Risk assessment and mitigation strategies}
+\end{table}
+\end{fullwidth}
+
+\chapter{Conclusion}
+
+\newthought{We are at} the inflection point of AI adoption in the enterprise.\sidenote{Our timing, team, and technology position us uniquely to capture this opportunity.} Our combination of technical excellence, user-centric design, and deep market understanding positions us to capture significant market share in this rapidly growing sector.
+
+\section{Why Now?}
+
+\begin{itemize}
+\item \textbf{Market Maturity:} Enterprises ready to adopt AI at scale
+\item \textbf{Technology Readiness:} Infrastructure and models at critical capabilities
+\item \textbf{Competitive Window:} First-mover advantage in key verticals
+\item \textbf{Team Strength:} Experienced leadership with proven track record
+\end{itemize}
+
+\section{Vision 2030}
+
+\begin{fullwidth}
+\noindent\colorbox{lightgray!30}{%
+  \parbox{\linewidth}{%
+    \vspace{0.3cm}
+    \textbf{\large Our 5-Year Vision}\\[0.3cm]
+    Become the leading AI platform for enterprises, powering intelligent decision-making for 10,000+ organizations worldwide. Achieve \$200M+ ARR with sustainable profitability and market leadership across multiple verticals.
+    \vspace{0.3cm}
+  }
+}
+\end{fullwidth}
+
+\vspace{2cm}
+
+\begin{center}
+\Large\textbf{Thank you for your consideration}
+
+\vspace{0.5cm}
+
+\normalsize For additional information, please contact our team
+\end{center}
+
+\backmatter
+
+\end{document}
