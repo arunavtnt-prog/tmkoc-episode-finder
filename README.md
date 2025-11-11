@@ -1,39 +1,49 @@
 # Business Plan PDF Generator
 
-A professional, automated business plan generation system with beautiful LaTeX styling inspired by Anthropic's design aesthetic. Generate stunning business plan PDFs complete with financial charts and the ability to rebrand existing PDFs.
+A professional business plan generation system featuring **Tufte-LaTeX** styling — the elegant, classic design used by Edward Tufte for his iconic books on data visualization and information design.
 
 ## Features
 
-- **Beautiful LaTeX Template**: Clean, modern design inspired by Anthropic's branding
-- **Automated Chart Generation**: Creates professional financial visualizations from CSV data
-- **PDF Rebranding**: Take any existing PDF and apply your corporate identity
+- **Tufte-LaTeX Design**: Beautiful typography with wide margins for sidenotes
+- **Automated Chart Generation**: Professional financial visualizations from CSV data
+- **PDF Rebranding**: Apply corporate identity to existing PDFs
 - **Pandoc Integration**: Write in Markdown, output professional PDF
 - **CI/CD Ready**: Automated builds with GitHub Actions
-- **Fully Customizable**: Easy to modify colors, fonts, and layouts
+
+## Design Philosophy
+
+This template uses Edward Tufte's design principles:
+
+- **Wide margins** for sidenotes and margin figures
+- **Elegant typography** (Palatino for body text, Helvetica for sans-serif)
+- **Minimal, clean design** that prioritizes content
+- **Tight integration** of text and graphics
+- **Margin notes** for commentary and additional context
 
 ## Quick Start
 
 ### Prerequisites
 
 **System Dependencies:**
-- `pandoc` - Document converter
-- `xelatex` - LaTeX PDF engine (from texlive)
+- `pdflatex` - LaTeX PDF engine (from texlive-latex-extra)
 - `python3` - For chart generation and PDF rebranding
+- Tufte-LaTeX class files (included in repository)
 
 **Installation:**
 
 ```bash
 # Ubuntu/Debian
 sudo apt-get update
-sudo apt-get install pandoc texlive-xetex texlive-fonts-extra python3 python3-pip
+sudo apt-get install texlive-latex-extra texlive-fonts-extra python3-pip
 
 # macOS
-brew install pandoc basictex python3
+brew install basictex python3
+sudo tlmgr install tufte-latex changepage fancyhdr
 
 # Python packages
 make install
 # or manually:
-pip3 install pandas matplotlib PyPDF2 reportlab
+pip3 install pandas matplotlib PyPDF2 reportlab Pillow
 ```
 
 ### Generate Your Business Plan
@@ -44,23 +54,23 @@ make all
 
 # Or step by step:
 make charts    # Generate financial charts
-make pdf       # Build the PDF
+make pdf       # Build the Tufte-styled PDF
 ```
 
-Output: `business-plan.pdf`
+Output: `business-plan.pdf` (Tufte-LaTeX styled, ~192 KB)
 
 ## Project Structure
 
 ```
 business-plan/
-├── plan.md                          # Main business plan content (Markdown + YAML)
-├── templates/
-│   └── corporate-template.tex       # LaTeX template (Anthropic-inspired design)
+├── business-plan-tufte.tex          # Main Tufte-LaTeX document
+├── tufte-book.cls                   # Tufte book class
+├── tufte-common.def                 # Tufte common definitions
+├── tufte-handout.cls                # Tufte handout class
 ├── data/
 │   └── forecast.csv                 # Financial forecast data
 ├── scripts/
 │   ├── generate_charts.py          # Generate charts from CSV
-│   ├── fix_svgs.sh                 # Convert SVGs to PDF
 │   └── rebrand_pdf.py              # Rebrand existing PDFs
 ├── charts/                          # Generated charts (auto-created)
 ├── assets/                          # Images and logos (auto-created)
@@ -73,60 +83,108 @@ business-plan/
 
 ### Edit Content
 
-Edit `plan.md` to customize your business plan content. Uses YAML frontmatter for metadata:
+The business plan is written directly in LaTeX using Tufte commands in `business-plan-tufte.tex`:
 
-```yaml
----
-title: "Your Company Name"
-subtitle: "Business Plan 2025-2027"
-author: "Your Name"
-date: "March 2025"
----
+```latex
+\chapter{Your Chapter}
 
-# Your Content Here
+\newthought{Start with emphasis} and continue your text.
+
+\marginnote{
+  Add notes in the margin
+}
+
+\sidenote{Or use sidenotes with numbers}
+
+\begin{figure}
+\includegraphics{your-chart.pdf}
+\caption{Your figure caption}
+\end{figure}
 ```
 
 ### Update Financial Data
 
-Edit `data/forecast.csv` with your financial projections:
+Edit `data/forecast.csv` with your financial projections. Charts regenerate automatically on build.
 
-```csv
-Quarter,Year,Revenue,Expenses,Customers,ARR
-Q1,2025,150000,450000,15,600000
-Q2,2025,350000,520000,35,1400000
+### Tufte-Specific Features
+
+**Margin Notes:**
+```latex
+\marginnote{Your note here}
+```
+
+**Sidenotes (numbered footnotes in margin):**
+```latex
+Some text\sidenote{Additional context}
+```
+
+**New Thought (section openings):**
+```latex
+\newthought{The first few words} of a new section
+```
+
+**Full-width Figures:**
+```latex
+\begin{figure*}
+\includegraphics{wide-chart.pdf}
+\caption{Spans across text and margin}
+\end{figure*}
+```
+
+**Margin Tables:**
+```latex
+\begin{margintable}
+\begin{tabular}{cc}
 ...
+\end{tabular}
+\caption{Table in margin}
+\end{margintable}
 ```
 
-Charts are automatically regenerated on build.
-
-### Customize Design
-
-**Colors:** Edit `templates/corporate-template.tex`
-
+**Full-width Tables:**
 ```latex
-\definecolor{anthropicOrange}{RGB}{232, 108, 56}
-\definecolor{anthroBlack}{RGB}{25, 25, 25}
+\begin{fullwidth}
+\begin{table}
+...
+\end{table}
+\end{fullwidth}
 ```
 
-**Fonts:** The template uses Inter font (falls back to Arial)
+## Building the PDF
 
-```latex
-\setmainfont{Inter}
+### Command Line
+
+```bash
+# Full Tufte compilation sequence
+pdflatex business-plan-tufte.tex
+pdflatex business-plan-tufte.tex
+pdflatex business-plan-tufte.tex
+
+# Or use the build script
+./build.sh
 ```
 
-To use custom fonts:
-1. Place font files in `fonts/` directory
-2. Update `\setmainfont` in template
+### Make Targets
 
-**Chart Colors:** Edit `scripts/generate_charts.py`
-
-```python
-COLORS = {
-    'orange': '#E86C38',
-    'dark_orange': '#BF4C21',
-    ...
-}
+```bash
+make all       # Generate charts and build PDF (default)
+make charts    # Generate financial charts only
+make pdf       # Build PDF with Tufte-LaTeX
+make rebrand   # Create rebranded PDF example
+make install   # Install Python dependencies
+make clean     # Remove generated files
+make help      # Show help message
 ```
+
+## Charts
+
+Three charts are automatically generated with modern gradient styling:
+
+1. **Revenue Forecast** - Quarterly revenue with customer growth
+2. **Expense Breakdown** - Revenue vs. expenses with profit line
+3. **ARR Growth** - Annual recurring revenue trajectory
+
+Charts are saved in both SVG (web) and PDF (LaTeX) formats and seamlessly integrate with the Tufte layout.
 
 ## PDF Rebranding
 
@@ -140,28 +198,8 @@ make rebrand
 python3 scripts/rebrand_pdf.py input.pdf -o output.pdf \
     --company "Your Company" \
     --doc-type "Proposal" \
-    --watermark \
-    --watermark-text "CONFIDENTIAL"
+    --watermark
 ```
-
-**Options:**
-- `--company`: Company name for header
-- `--doc-type`: Document type label
-- `--watermark`: Enable watermark overlay
-- `--watermark-text`: Watermark text (default: DRAFT)
-- `--no-header`: Disable header
-- `--no-footer`: Disable footer
-- `--no-accent`: Disable accent bar
-
-## Charts
-
-Three charts are automatically generated:
-
-1. **Revenue Forecast** - Quarterly revenue with customer growth
-2. **Expense Breakdown** - Revenue vs. expenses with profit line
-3. **ARR Growth** - Annual recurring revenue trajectory
-
-Charts are saved in both SVG (web) and PDF (LaTeX) formats.
 
 ## CI/CD Integration
 
@@ -170,83 +208,104 @@ GitHub Actions workflow included (`.github/workflows/build.yml`):
 ```yaml
 # Automatically builds PDF on push
 # Uploads PDF as artifact
-# Can be extended for automatic releases
 ```
 
-## Make Targets
+The workflow installs all required LaTeX packages and Python dependencies.
 
-```bash
-make all       # Generate charts and build PDF (default)
-make charts    # Generate financial charts only
-make pdf       # Build PDF from markdown
-make rebrand   # Create rebranded PDF example
-make install   # Install Python dependencies
-make clean     # Remove generated files
-make help      # Show help message
-```
+## Tufte-LaTeX Design Elements
+
+### Typography
+- **Body Text**: Palatino (beautiful serif for readability)
+- **Headings**: Matching serif capitals
+- **Sans-serif**: Helvetica (for contrast)
+- **Line Spacing**: Generous, Tufte-calibrated
+
+### Layout
+- **Wide Margins**: ~1.5 inches for sidenotes and figures
+- **Text Column**: Narrower for better readability
+- **Margin Column**: For notes, small figures, tables
+- **Full Width**: Available when needed
+
+### Visual Integration
+- Figures can be placed in margin or span full width
+- Tables integrate naturally in text or margin
+- Charts designed to complement text flow
+- Minimal decoration, maximum clarity
 
 ## Troubleshooting
 
-**"pandoc: command not found"**
-- Install pandoc: `sudo apt-get install pandoc` or `brew install pandoc`
+**"tufte-book.cls not found"**
+- Ensure you've cloned the repository with all files
+- Check that `tufte-book.cls` exists in project root
 
-**"xelatex: command not found"**
-- Install texlive: `sudo apt-get install texlive-xetex texlive-fonts-extra`
+**"Package not found" errors**
+- Install missing packages: `sudo tlmgr install <package-name>`
+- Or install full texlive: `sudo apt-get install texlive-full`
 
-**"No module named 'pandas'"**
-- Install Python packages: `make install` or `pip3 install pandas matplotlib`
+**Charts not appearing**
+- Run `make charts` first
+- Verify `charts/*.pdf` files exist
+- Check file paths in `.tex` file
 
-**LaTeX errors about missing fonts**
-- The template falls back to Arial if Inter is not available
-- Install Inter font from https://rsms.me/inter/ or use system fonts
+**PDF has wrong margins**
+- Tufte uses custom margins by design (this is normal)
+- Wide right margin is for sidenotes and figures
 
-**Charts not appearing in PDF**
-- Ensure charts are generated: `make charts`
-- Check that `charts/*.pdf` files exist
-- Verify file paths in `plan.md` match generated chart names
+## Design Inspiration
 
-## Design Philosophy
+This template follows Edward Tufte's principles from:
 
-This template follows Anthropic's design principles:
+- *The Visual Display of Quantitative Information*
+- *Envisioning Information*
+- *Beautiful Evidence*
 
-- **Clean & Minimal**: Focus on content, not decoration
-- **Professional**: Suitable for investor presentations and business use
-- **Accessible**: High contrast, readable fonts, clear hierarchy
-- **Modern**: Contemporary design that feels fresh and innovative
-
-**Color Palette:**
-- Primary: Warm orange (#E86C38) - energy and innovation
-- Accent: Dark orange (#BF4C21) - depth and sophistication
-- Text: Near-black (#191919) - readability
-- Secondary: Professional blue (#2D6DA4) - trust
+Key principles:
+- **Show the data** - let content speak
+- **Induce the viewer to think** about substance
+- **Make large data sets coherent**
+- **Reveal data at several levels** of detail
+- **Integrate** text, graphics, and data
 
 ## Examples
 
 See generated examples:
-- `business-plan.pdf` - Full business plan with charts
+- `business-plan.pdf` - Full Tufte-styled business plan (~192 KB)
 - `example-rebranded.pdf` - Rebranded PDF with corporate styling
+
+## File Sizes
+
+- Tufte PDF: ~192 KB (24 pages)
+- Charts: ~30-35 KB each (3 charts)
+- Total package: Professional, elegant, readable
 
 ## Contributing
 
 To extend this template:
 
-1. **Add new chart types**: Edit `scripts/generate_charts.py`
-2. **Customize template**: Modify `templates/corporate-template.tex`
-3. **Enhance rebranding**: Extend `scripts/rebrand_pdf.py`
-4. **Add sections**: Edit `plan.md` structure
+1. **Add sections**: Follow Tufte commands in `.tex` file
+2. **Add charts**: Edit `scripts/generate_charts.py`
+3. **Customize styling**: Modify color definitions in `.tex`
+4. **Add margin content**: Use `\marginnote` and `\sidenote`
+
+## References
+
+- [Tufte-LaTeX GitHub](https://github.com/Tufte-LaTeX/tufte-latex)
+- [Edward Tufte's Website](https://www.edwardtufte.com)
+- [Tufte-LaTeX Documentation](https://tufte-latex.github.io/tufte-latex/)
 
 ## License
 
-This template is provided as-is for creating business documents. Customize freely for your needs.
+This template is provided as-is for creating business documents. The Tufte-LaTeX classes are licensed under Apache License 2.0.
 
 ## Credits
 
-- Design inspired by [Anthropic](https://www.anthropic.com)'s visual identity
-- Built with [Pandoc](https://pandoc.org), [XeLaTeX](https://www.latex-project.org), and [Python](https://www.python.org)
+- Design principles by [Edward Tufte](https://www.edwardtufte.com)
+- Tufte-LaTeX by [Tufte-LaTeX developers](https://github.com/Tufte-LaTeX)
 - Charts powered by [Matplotlib](https://matplotlib.org)
+- Business plan template by Claude/Anthropic
 
 ---
 
-**Need help?** Check the troubleshooting section or open an issue.
+**Need help?** Check the troubleshooting section or consult the Tufte-LaTeX documentation.
 
-**Ready to build?** Run `make all` and generate your professional business plan!
+**Ready to build?** Run `make all` and generate your elegant, Tufte-styled business plan!
