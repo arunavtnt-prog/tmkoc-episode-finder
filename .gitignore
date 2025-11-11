@@ -1,0 +1,47 @@
+# Generated PDFs
+*.pdf
+!templates/*.pdf
+
+# Generated charts
+charts/*.svg
+charts/*.pdf
+
+# Generated assets
+assets/*.png
+assets/*.jpg
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv
+
+# LaTeX intermediate files
+*.aux
+*.log
+*.out
+*.toc
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.xdv
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+tmp/
+temp/
+*.tmp

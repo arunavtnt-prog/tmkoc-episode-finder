@@ -1,0 +1,72 @@
+name: Build Business Plan PDF
+
+on:
+  push:
+    branches: [ main, master, claude/** ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          pandoc \
+          texlive-xetex \
+          texlive-fonts-extra \
+          texlive-latex-extra \
+          fonts-dejavu-core \
+          python3-pip
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pandas matplotlib PyPDF2 reportlab Pillow
+
+    - name: Generate charts
+      run: make charts
+
+    - name: Build PDF
+      run: make pdf
+
+    - name: Generate rebranded example
+      run: |
+        make rebrand || echo "Rebrand example skipped"
+
+    - name: Verify PDF was created
+      run: |
+        if [ ! -f "business-plan.pdf" ]; then
+          echo "Error: business-plan.pdf was not created"
+          exit 1
+        fi
+        echo "✓ PDF created successfully"
+        ls -lh business-plan.pdf
+
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: business-plan-pdf
+        path: |
+          business-plan.pdf
+          example-rebranded.pdf
+        retention-days: 30
+
+    - name: Upload charts
+      uses: actions/upload-artifact@v3
+      with:
+        name: financial-charts
+        path: charts/*.pdf
+        retention-days: 30
