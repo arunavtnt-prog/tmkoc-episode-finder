@@ -39,30 +39,10 @@
 \definecolor{anthroBlue}{RGB}{45, 109, 164}           % Professional blue
 
 % Font configuration - modern, clean sans-serif
-\setmainfont{Inter}[
-    Path=./fonts/,
-    Extension=.ttf,
-    UprightFont=*-Regular,
-    BoldFont=*-Bold,
-    ItalicFont=*-Italic,
-    BoldItalicFont=*-BoldItalic
-]
+% Using Liberation Sans (universally available and compatible)
+\setmainfont{Liberation Sans}
 
-% Fallback to system fonts if Inter is not available
-\IfFontExistsTF{Inter}{}{
-    \setmainfont{Arial}
-}
-
-\setsansfont{Inter}[
-    Path=./fonts/,
-    Extension=.ttf,
-    UprightFont=*-Regular,
-    BoldFont=*-Bold
-]
-
-\IfFontExistsTF{Inter}{}{
-    \setsansfont{Arial}
-}
+\setsansfont{Liberation Sans}
 
 % Use sans-serif throughout
 \renewcommand{\familydefault}{\sfdefault}

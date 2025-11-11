@@ -1,6 +1,7 @@
 # Generated PDFs
 *.pdf
 !templates/*.pdf
+!business-plan.pdf
 
 # Generated charts
 charts/*.svg

@@ -11,7 +11,7 @@ echo "==================================="
 # Configuration
 INPUT_MD="plan.md"
 OUTPUT_PDF="business-plan.pdf"
-TEMPLATE="templates/corporate-template.tex"
+TEMPLATE="templates/corporate-template-simple.tex"
 CHARTS_DIR="charts"
 ASSETS_DIR="assets"
 

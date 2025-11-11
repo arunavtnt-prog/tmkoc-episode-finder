@@ -4,8 +4,6 @@ subtitle: "Business Plan 2025-2027"
 author: "Anthropic Ventures"
 date: "March 2025"
 version: "1.0"
-logo: "assets/logo.png"
-cover-image: "assets/cover-bg.png"
 ---
 
 # Executive Summary
