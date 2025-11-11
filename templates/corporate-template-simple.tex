@@ -1,0 +1,121 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{longtable}
+
+% Page geometry
+\geometry{
+    letterpaper,
+    left=1.25in,
+    right=1.25in,
+    top=1.25in,
+    bottom=1.25in
+}
+
+% Anthropic-inspired colors
+\definecolor{anthropicOrange}{RGB}{232, 108, 56}
+\definecolor{anthroBlack}{RGB}{25, 25, 25}
+\definecolor{anthroGray}{RGB}{95, 95, 95}
+
+% Simple font setup
+\setmainfont{DejaVu Sans}
+\setsansfont{DejaVu Sans}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Hyperlinks
+\hypersetup{
+    colorlinks=true,
+    linkcolor=anthropicOrange,
+    urlcolor=anthropicOrange,
+    citecolor=anthroBlack
+}
+
+% Section formatting
+\titleformat{\section}
+    {\color{anthroBlack}\Large\bfseries}
+    {}
+    {0pt}
+    {}
+    [\vspace{2pt}{\color{anthropicOrange}\titlerule[2pt]}]
+
+\titleformat{\subsection}
+    {\color{anthroBlack}\large\bfseries}
+    {}
+    {0pt}
+    {}
+
+% Header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{anthroGray}$title$}
+\fancyhead[R]{\small\color{anthroGray}$if(date)$$date$$endif$}
+\fancyfoot[C]{\small\color{anthroGray}\thepage}
+\renewcommand{\headrulewidth}{0.5pt}
+
+% Lists
+\setlist[itemize]{
+    leftmargin=*,
+    label={\color{anthropicOrange}\textbullet}
+}
+
+% Paragraph spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
+% Pandoc tightlist command
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+% Image handling
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,keepaspectratio}
+
+\begin{document}
+
+% Title
+\begin{center}
+{\Huge\bfseries\color{anthroBlack} $title$}
+
+\vspace{0.5cm}
+
+$if(subtitle)$
+{\Large\color{anthroGray} $subtitle$}
+\vspace{0.3cm}
+$endif$
+
+{\color{anthropicOrange}\rule{0.5\textwidth}{3pt}}
+
+\vspace{0.5cm}
+
+$if(author)$
+{\large $author$}
+$endif$
+
+$if(date)$
+{\color{anthroGray} $date$}
+$endif$
+
+\end{center}
+
+\vspace{2cm}
+
+% Table of contents
+$if(toc)$
+\tableofcontents
+\newpage
+$endif$
+
+% Main content
+$body$
+
+\end{document}
