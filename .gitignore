@@ -2,6 +2,7 @@
 *.pdf
 !templates/*.pdf
 !business-plan.pdf
+!Strategic*.pdf
 
 # Generated charts
 charts/*.svg
