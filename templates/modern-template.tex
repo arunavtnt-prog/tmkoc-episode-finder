@@ -1,0 +1,293 @@
+\documentclass[11pt,letterpaper]{article}
+
+% Modern business plan template with visual design
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{colortbl}
+
+% Page geometry - modern layout
+\geometry{
+    letterpaper,
+    left=1in,
+    right=1in,
+    top=1.2in,
+    bottom=1in,
+    headheight=40pt,
+    footskip=30pt
+}
+
+% Modern color palette
+\definecolor{NavyPrimary}{RGB}{11, 14, 20}
+\definecolor{ElectricBlue}{RGB}{0, 123, 255}
+\definecolor{LightBlue}{RGB}{0, 212, 255}
+\definecolor{GreyText}{RGB}{91, 94, 99}
+\definecolor{OffWhite}{RGB}{248, 249, 251}
+\definecolor{White}{RGB}{255, 255, 255}
+
+% Font setup - DejaVu Sans (modern, clean)
+\setmainfont{DejaVu Sans}
+\setsansfont{DejaVu Sans}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Hyperlinks - modern blue
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ElectricBlue,
+    urlcolor=ElectricBlue,
+    citecolor=NavyPrimary,
+    pdfborder={0 0 0},
+    bookmarksnumbered=true
+}
+
+% Section formatting with gradient bars
+\titleformat{\section}
+    {\color{NavyPrimary}\LARGE\bfseries}
+    {\colorbox{ElectricBlue}{\color{White}\thesection}}
+    {10pt}
+    {}
+    [\vspace{-8pt}{\color{ElectricBlue}\titlerule[3pt]}\vspace{4pt}]
+
+\titleformat{\subsection}
+    {\color{NavyPrimary}\Large\bfseries}
+    {\color{ElectricBlue}\thesubsection}
+    {8pt}
+    {}
+    [\vspace{-4pt}{\color{LightBlue}\titlerule[1.5pt]}]
+
+\titleformat{\subsubsection}
+    {\color{NavyPrimary}\large\bfseries}
+    {\color{ElectricBlue}\thesubsubsection}
+    {6pt}
+    {}
+
+% Spacing
+\titlespacing*{\section}{0pt}{28pt}{16pt}
+\titlespacing*{\subsection}{0pt}{20pt}{12pt}
+\titlespacing*{\subsubsection}{0pt}{16pt}{8pt}
+
+% Modern header
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Header with gradient bar
+\fancyhead[L]{
+    \vspace{8pt}
+    \small\color{NavyPrimary}\bfseries $title$
+}
+\fancyhead[R]{
+    \vspace{8pt}
+    \small\color{GreyText}$if(date)$$date$$endif$
+}
+
+% Footer with modern design
+\fancyfoot[L]{\small\color{GreyText}© 2025 $if(author)$$author$$endif$}
+\fancyfoot[C]{\small\color{NavyPrimary}\bfseries\thepage}
+\fancyfoot[R]{\small\color{GreyText}CONFIDENTIAL}
+
+% Custom title page
+\renewcommand{\maketitle}{
+    \begin{titlepage}
+        % Background
+        \pagecolor{OffWhite}
+
+        \begin{center}
+            \vspace*{2cm}
+
+            % Logo
+            $if(logo)$
+            \includegraphics[width=0.25\textwidth]{$logo$}
+            \vspace{1cm}
+            $endif$
+
+            % Title
+            {\fontsize{48}{58}\bfseries\color{NavyPrimary}
+            $title$
+            }
+
+            \vspace{0.7cm}
+
+            % Subtitle
+            $if(subtitle)$
+            {\fontsize{22}{28}\color{GreyText}
+            $subtitle$
+            }
+            \vspace{1.5cm}
+            $endif$
+
+            % Gradient bar
+            \textcolor{ElectricBlue}{\rule{10cm}{3pt}}
+
+            \vspace{2cm}
+
+            % Author
+            $if(author)$
+            {\Large\color{NavyPrimary}\bfseries
+            $author$
+            }
+            \vspace{0.5cm}
+            $endif$
+
+            % Date
+            $if(date)$
+            {\large\color{GreyText}
+            $date$
+            }
+            $endif$
+
+            \vfill
+
+            % Version badge
+            $if(version)$
+            \begin{tcolorbox}[
+                colback=ElectricBlue,
+                colframe=ElectricBlue,
+                width=4cm,
+                arc=10pt,
+                boxrule=0pt,
+                center
+            ]
+                \centering\color{White}\bfseries
+                Version $version$
+            \end{tcolorbox}
+            $endif$
+
+        \end{center}
+    \end{titlepage}
+    \pagecolor{White}
+}
+
+% Modern stat boxes
+\newtcolorbox{statbox}[1]{
+    colback=OffWhite,
+    colframe=ElectricBlue,
+    boxrule=2pt,
+    arc=8pt,
+    left=12pt,
+    right=12pt,
+    top=10pt,
+    bottom=10pt,
+    title={#1},
+    fonttitle=\bfseries\color{NavyPrimary},
+    coltitle=NavyPrimary
+}
+
+% Highlight boxes
+\newtcolorbox{highlightbox}{
+    colback=OffWhite,
+    colframe=LightBlue,
+    boxrule=0pt,
+    leftrule=4pt,
+    arc=4pt,
+    left=12pt,
+    right=12pt,
+    top=10pt,
+    bottom=10pt
+}
+
+% Quote boxes
+\newtcolorbox{quotebox}{
+    colback=White,
+    colframe=ElectricBlue,
+    boxrule=2pt,
+    arc=6pt,
+    left=16pt,
+    right=16pt,
+    top=12pt,
+    bottom=12pt,
+    fontupper=\large\itshape\color{NavyPrimary}
+}
+
+% List styling with modern bullets
+\setlist[itemize]{
+    leftmargin=*,
+    itemsep=6pt,
+    parsep=0pt,
+    topsep=10pt,
+    label={\color{ElectricBlue}\textbullet}
+}
+
+\setlist[enumerate]{
+    leftmargin=*,
+    itemsep=6pt,
+    parsep=0pt,
+    topsep=10pt,
+    label={\color{ElectricBlue}\bfseries\arabic*.}
+}
+
+% Paragraph spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+\setlength{\parskip}{10pt plus 2pt minus 1pt}
+
+% Pandoc tightlist
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{4pt}\setlength{\parskip}{0pt}}
+
+% Image handling
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>0.85\textheight 0.85\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Figure captions
+\usepackage{caption}
+\captionsetup{
+    font={small,sf},
+    labelfont={bf,color=NavyPrimary},
+    textfont={color=GreyText},
+    justification=centering,
+    skip=12pt
+}
+
+% Table styling
+\renewcommand{\arraystretch}{1.4}
+\arrayrulecolor{LightBlue}
+
+% Better line spacing
+\renewcommand{\baselinestretch}{1.15}
+
+% Watermark (optional - disabled for compatibility)
+% $if(watermark)$
+% Add watermark code here if needed
+% $endif$
+
+\begin{document}
+
+% Title page
+$if(title)$
+\maketitle
+$endif$
+
+% Table of contents with modern styling
+$if(toc)$
+{
+\hypersetup{linkcolor=NavyPrimary}
+\setcounter{tocdepth}{2}
+\begin{center}
+{\LARGE\bfseries\color{NavyPrimary} Contents}
+\vspace{0.3cm}
+
+\textcolor{ElectricBlue}{\rule{8cm}{2pt}}
+\end{center}
+\vspace{0.5cm}
+\tableofcontents
+\newpage
+}
+$endif$
+
+% Main content
+$body$
+
+\end{document}
